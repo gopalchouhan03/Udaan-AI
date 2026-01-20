@@ -5,43 +5,108 @@ on:
     branches:
       - main
 
+env:
+  AWS_REGION: ap-south-1
+  NODE_VERSION: 18
+
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
+    concurrency:
+      group: frontend-deployment
+      cancel-in-progress: false
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Validate Secrets
+        run: |
+          if [ -z "${{ secrets.S3_BUCKET_NAME }}" ]; then
+            echo "❌ Error: S3_BUCKET_NAME secret is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" ]; then
+            echo "❌ Error: CLOUDFRONT_DISTRIBUTION_ID secret is not set"
+            exit 1
+          fi
+          echo "✓ All required secrets are configured"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
 
       - name: Install Dependencies
         run: |
           cd frontend
-          npm install
+          npm ci --prefer-offline
 
       - name: Build Frontend
         run: |
           cd frontend
           npm run build
+        env:
+          CI: true
+
+      - name: Verify Build Output
+        run: |
+          if [ ! -d "frontend/dist" ]; then
+            echo "❌ Build failed: dist directory not found"
+            exit 1
+          fi
+          if [ -z "$(ls -A frontend/dist)" ]; then
+            echo "❌ Build failed: dist directory is empty"
+            exit 1
+          fi
+          echo "✓ Build output verified"
 
       - name: Deploy to S3
         run: |
-          aws s3 sync frontend/dist s3://${{ secrets.S3_BUCKET_NAME }} --delete
+          echo "📤 Uploading files to S3..."
+          aws s3 sync frontend/dist s3://${{ secrets.S3_BUCKET_NAME }} \
+            --delete \
+            --cache-control "public, max-age=3600" \
+            --exclude "index.html" && \
+          aws s3 cp frontend/dist/index.html s3://${{ secrets.S3_BUCKET_NAME }}/index.html \
+            --cache-control "no-cache, no-store, must-revalidate" \
+            --content-type "text/html"
+          echo "✓ S3 deployment completed"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-south-1
+          AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
 
-      - name: Invalidate CloudFront
+      - name: Invalidate CloudFront Cache
         run: |
-          aws cloudfront create-invalidation \
+          echo "🔄 Invalidating CloudFront cache..."
+          INVALIDATION_ID=$(aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*"
+            --paths "/*" \
+            --query 'Invalidation.Id' \
+            --output text)
+          echo "Invalidation ID: $INVALIDATION_ID"
+          echo "⏳ Waiting for invalidation to complete..."
+          aws cloudfront wait invalidation-completed \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --id $INVALIDATION_ID
+          echo "✓ CloudFront invalidation completed"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-south-1
+          AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
+
+      - name: Deployment Summary
+        if: success()
+        run: |
+          echo "✅ Frontend deployment successful!"
+          echo "📍 Frontend URL: https://d2i4w0tbngbtdf.cloudfront.net"
+          echo "🪣 S3 Bucket: s3://${{ secrets.S3_BUCKET_NAME }}"
+
+      - name: Deployment Failed
+        if: failure()
+        run: |
+          echo "❌ Frontend deployment failed!"
+          exit 1
