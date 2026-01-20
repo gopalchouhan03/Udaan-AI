@@ -15,6 +15,7 @@ jobs:
     concurrency:
       group: frontend-deployment
       cancel-in-progress: false
+    environment: production
 
     steps:
       - name: Checkout Code
@@ -22,12 +23,17 @@ jobs:
 
       - name: Validate Secrets
         run: |
-          if [ -z "${{ secrets.S3_BUCKET_NAME }}" ]; then
-            echo "❌ Error: S3_BUCKET_NAME secret is not set"
-            exit 1
-          fi
-          if [ -z "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" ]; then
-            echo "❌ Error: CLOUDFRONT_DISTRIBUTION_ID secret is not set"
+          BUCKET="${{ secrets.S3_BUCKET_NAME }}"
+          DIST_ID="${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}"
+          ACCESS_KEY="${{ secrets.AWS_ACCESS_KEY_ID }}"
+          SECRET_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          
+          if [ -z "$BUCKET" ] || [ -z "$DIST_ID" ] || [ -z "$ACCESS_KEY" ] || [ -z "$SECRET_KEY" ]; then
+            echo "❌ Error: Required secrets are not configured:"
+            [ -z "$BUCKET" ] && echo "  - S3_BUCKET_NAME"
+            [ -z "$DIST_ID" ] && echo "  - CLOUDFRONT_DISTRIBUTION_ID"
+            [ -z "$ACCESS_KEY" ] && echo "  - AWS_ACCESS_KEY_ID"
+            [ -z "$SECRET_KEY" ] && echo "  - AWS_SECRET_ACCESS_KEY"
             exit 1
           fi
           echo "✓ All required secrets are configured"

@@ -17,6 +17,7 @@ jobs:
     concurrency:
       group: backend-deployment
       cancel-in-progress: false
+    environment: production
 
     steps:
       - name: Checkout Code
@@ -24,12 +25,15 @@ jobs:
 
       - name: Validate Secrets
         run: |
-          if [ -z "${{ secrets.EC2_HOST }}" ]; then
-            echo "❌ Error: EC2_HOST secret is not set"
-            exit 1
-          fi
-          if [ -z "${{ secrets.EC2_USER }}" ]; then
-            echo "❌ Error: EC2_USER secret is not set"
+          HOST="${{ secrets.EC2_HOST }}"
+          USER="${{ secrets.EC2_USER }}"
+          KEY="${{ secrets.EC2_SSH_KEY }}"
+          
+          if [ -z "$HOST" ] || [ -z "$USER" ] || [ -z "$KEY" ]; then
+            echo "❌ Error: Required secrets are not configured:"
+            [ -z "$HOST" ] && echo "  - EC2_HOST"
+            [ -z "$USER" ] && echo "  - EC2_USER"
+            [ -z "$KEY" ] && echo "  - EC2_SSH_KEY"
             exit 1
           fi
           echo "✓ All required secrets are configured"
