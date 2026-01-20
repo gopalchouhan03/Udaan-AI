@@ -15,7 +15,6 @@ jobs:
     concurrency:
       group: frontend-deployment
       cancel-in-progress: false
-    environment: production
 
     steps:
       - name: Checkout Code
