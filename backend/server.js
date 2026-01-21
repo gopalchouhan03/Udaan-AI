@@ -15,14 +15,12 @@ app.use(helmet());
 // Allow requests from the frontend. In development allow any localhost origin to
 // support vite running on alternative ports (5173, 5174, etc.). In production
 // respect FRONTEND_URL.
-const corsOptions = {
-  origin: "*",
-  // process.env.NODE_ENV === 'development'
-  //   ? true
-  //   : (process.env.FRONTEND_URL || 'http://localhost:5173'),
+app.use(cors({
+  origin: [
+    "https://d2i4w0tbngbtdf.cloudfront.net"
+  ],
   credentials: true
-};
-app.use(cors(corsOptions));
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
