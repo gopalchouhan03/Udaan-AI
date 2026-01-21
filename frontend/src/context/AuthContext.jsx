@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const token = localStorage.getItem(AUTH_TOKEN_KEY);
         const userData = JSON.parse(localStorage.getItem(USER_DATA_KEY));
-        
+
         if (token && userData) {
           setIsAuthenticated(true);
           setUser(userData);
@@ -36,25 +36,27 @@ export const AuthProvider = ({ children }) => {
       }
 
       const response = await authService.login(credentials);
-      
+
       if (!response.data || !response.data.token || !response.data.user) {
         throw new Error('Invalid response from server');
+        console.log("LOGIN RESPONSE:", response.data);
+
       }
 
       const { token, user } = response.data;
-      
+
       localStorage.setItem(AUTH_TOKEN_KEY, token);
       localStorage.setItem(USER_DATA_KEY, JSON.stringify(user));
-      
+
       setIsAuthenticated(true);
       setUser(user);
       return { success: true, user };
     } catch (error) {
       console.error('Login error:', error);
-      const errorMessage = error.response?.data?.error || 
-                          error.response?.data?.message || 
-                          error.message || 
-                          'Login failed';
+      const errorMessage = error.response?.data?.error ||
+        error.response?.data?.message ||
+        error.message ||
+        'Login failed';
       throw new Error(errorMessage);
     }
   };
@@ -76,14 +78,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider 
-      value={{ 
-        isAuthenticated, 
-        loading, 
-        user, 
-        login, 
-        logout, 
-        updateUser 
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        loading,
+        user,
+        login,
+        logout,
+        updateUser
       }}
     >
       {!loading && children}
