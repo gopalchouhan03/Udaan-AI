@@ -39,7 +39,7 @@ router.post('/login', loginRules, validate, async (req, res) => {
   
     if (!match) return res.status(400).json({ error: 'Invalid credentials' });
     const token = generateToken(user);
-    return res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+    return res.json({ success: true, token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Server error' });
