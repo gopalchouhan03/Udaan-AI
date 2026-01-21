@@ -12,6 +12,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Debug secrets (safe)
+  run: |
+    if [ -z "${{ secrets.EC2_HOST }}" ]; then
+      echo "EC2_HOST is EMPTY"
+    else
+      echo "EC2_HOST is PRESENT"
+    fi
 
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.0
