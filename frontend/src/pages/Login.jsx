@@ -18,8 +18,6 @@ export default function Login() {
   // Get the page user tried to visit or default to dashboard
   const from = location.state?.from?.pathname || "/dashboard";
 
-  const apiBase = import.meta.env.VITE_API_URL;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
