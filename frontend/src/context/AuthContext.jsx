@@ -39,8 +39,6 @@ export const AuthProvider = ({ children }) => {
 
       if (!response.data || !response.data.token || !response.data.user) {
         throw new Error('Invalid response from server');
-        console.log("LOGIN RESPONSE:", response.data);
-
       }
 
       const { token, user } = response.data;
