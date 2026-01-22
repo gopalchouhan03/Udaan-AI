@@ -13,7 +13,7 @@ const Button = ({
   className = '',
   ...props 
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
+  const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 min-h-[44px] text-sm xs:text-base';
   
   const variants = {
     primary: 'bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500',
@@ -23,9 +23,9 @@ const Button = ({
   };
 
   const sizes = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg',
+    sm: 'px-2 xs:px-3 py-1.5 text-xs xs:text-sm',
+    md: 'px-3 xs:px-4 py-2 xs:py-2.5 text-sm xs:text-base',
+    lg: 'px-4 xs:px-6 py-3 text-base xs:text-lg',
   };
 
   const classes = [

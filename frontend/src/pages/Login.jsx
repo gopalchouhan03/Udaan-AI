@@ -60,17 +60,17 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-white to-amber-50 py-10 px-6 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-white to-amber-50 py-4 xs:py-6 sm:py-10 px-3 xs:px-4 sm:px-6 flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white/80 backdrop-blur rounded-2xl p-8 shadow-xl border border-white/60 w-full max-w-md"
+        className="bg-white/80 backdrop-blur rounded-2xl p-6 xs:p-8 shadow-xl border border-white/60 w-full max-w-sm"
       >
-        <div className="text-center mb-6">
-          <img src="Logo.png" alt="Udaan" className="h-12 mx-auto mb-3" />
-          <h2 className="text-2xl font-bold text-orange-600">Welcome back</h2>
-          <p className="text-sm text-gray-600">Sign in to continue to your Udaan workspace</p>
+        <div className="text-center mb-4 xs:mb-6">
+          <img src="Logo.png" alt="Udaan" className="h-10 xs:h-12 mx-auto mb-2 xs:mb-3" />
+          <h2 className="text-xl xs:text-2xl font-bold text-orange-600">Welcome back</h2>
+          <p className="text-xs xs:text-sm text-gray-600 mt-1">Sign in to continue to your Udaan workspace</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

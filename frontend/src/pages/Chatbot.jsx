@@ -131,57 +131,57 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-teal-50 py-10 px-4 mt-10">
-      <div className="mx-auto max-w-4xl bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-white/60 overflow-hidden">
-        <header className="flex items-center gap-4 p-6 border-b border-white/40">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold text-lg">UA</div>
-          <div>
-            <h3 className="text-xl font-bold text-orange-700">Udaan Assistant</h3>
-            <p className="text-sm text-gray-600">Your friendly companion for journaling, mood checks and career tips.</p>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-teal-50 py-4 xs:py-6 sm:py-10 px-3 xs:px-4 sm:px-6 mt-16 xs:mt-14 sm:mt-16 md:mt-0 pb-safe-bottom">
+      <div className="mx-auto max-w-4xl bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-white/60 overflow-hidden flex flex-col h-[calc(100vh-120px)] xs:h-[calc(100vh-140px)]">
+        <header className="flex items-center gap-3 xs:gap-4 p-4 xs:p-6 border-b border-white/40 flex-shrink-0">
+          <div className="w-10 xs:w-12 h-10 xs:h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold text-sm xs:text-lg flex-shrink-0">UA</div>
+          <div className="flex-grow min-w-0">
+            <h3 className="text-lg xs:text-xl font-bold text-orange-700 truncate">Udaan Assistant</h3>
+            <p className="text-xs xs:text-sm text-gray-600 line-clamp-1">Your friendly companion for journaling, mood checks and career tips.</p>
           </div>
-          <div className="ml-auto text-sm text-gray-500">Private · Personalized</div>
+          <div className="text-xs text-gray-500 whitespace-nowrap">Private · Personalized</div>
         </header>
 
-        <main className="p-6">
-          <section className="mb-4">
-            <div className="flex flex-wrap gap-3">
+        <main className="p-3 xs:p-6 overflow-y-auto flex-grow flex flex-col">
+          <section className="mb-4 flex-shrink-0">
+            <div className="flex flex-wrap gap-2 xs:gap-3">
               {suggestedPrompts.map((s) => (
-                <button key={s} onClick={() => handleSuggested(s)} className="text-sm bg-orange-50 text-orange-700 px-4 py-2 rounded-full border border-orange-100 hover:bg-orange-100 transition">{s}</button>
+                <button key={s} onClick={() => handleSuggested(s)} className="text-xs xs:text-sm bg-orange-50 text-orange-700 px-2 xs:px-4 py-1.5 xs:py-2 rounded-full border border-orange-100 hover:bg-orange-100 transition whitespace-normal xs:whitespace-nowrap">{s}</button>
               ))}
             </div>
           </section>
 
-          <div className="flex gap-6">
-            <div className="flex-1">
-              <div ref={listRef} className="bg-white p-4 rounded-lg border border-orange-100 h-96 overflow-auto shadow-sm">
+          <div className="flex flex-col lg:flex-row gap-4 xs:gap-6 flex-grow min-h-0">
+            <div className="flex-1 flex flex-col min-h-0 lg:min-h-auto">
+              <div ref={listRef} className="bg-white p-3 xs:p-4 rounded-lg border border-orange-100 flex-grow overflow-auto shadow-sm">
                 {messages.length === 0 && (
-                  <div className="text-center text-gray-500 mt-20">Start a conversation — try a suggested prompt or ask something new.</div>
+                  <div className="text-center text-gray-500 mt-8 xs:mt-20 text-sm xs:text-base">Start a conversation — try a suggested prompt or ask something new.</div>
                 )}
 
-                <div className="space-y-4">
+                <div className="space-y-3 xs:space-y-4">
                   {messages.map((m) => (
                     <div key={m.id} className={`flex items-start ${m.role === 'assistant' ? 'justify-start' : m.role === 'user' ? 'justify-end' : 'justify-center'}`}>
                       {m.role === 'assistant' && (
-                        <div className="w-10 h-10 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center mr-3">🤖</div>
+                        <div className="w-8 xs:w-10 h-8 xs:h-10 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center mr-2 xs:mr-3 flex-shrink-0 text-xs xs:text-base">🤖</div>
                       )}
 
-                      <div className={`max-w-[78%] p-3 rounded-lg ${m.role === 'assistant' ? 'bg-gradient-to-br from-orange-50 to-orange-100 text-orange-900' : m.role === 'user' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700'}`}>
-                        <div className="text-sm whitespace-pre-line">{m.text}</div>
-                        <div className="mt-2 flex items-center gap-2">
+                      <div className={`max-w-xs xs:max-w-sm lg:max-w-lg p-2 xs:p-3 rounded-lg text-sm xs:text-base ${m.role === 'assistant' ? 'bg-gradient-to-br from-orange-50 to-orange-100 text-orange-900' : m.role === 'user' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700'}`}>
+                        <div className="whitespace-pre-line break-words">{m.text}</div>
+                        <div className="mt-1 xs:mt-2 flex items-center gap-1 xs:gap-2 flex-wrap">
                           {m.mood && (
-                            <span className="inline-block text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">{m.mood}</span>
+                            <span className="inline-block text-xs bg-orange-100 text-orange-700 px-1.5 xs:px-2 py-0.5 xs:py-1 rounded">{m.mood}</span>
                           )}
                           {m.language && (
-                            <span className="inline-block text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{m.language === 'hi' ? 'हिंदी' : m.language === 'hinglish' ? 'Hinglish' : 'English'}</span>
+                            <span className="inline-block text-xs bg-gray-100 text-gray-700 px-1.5 xs:px-2 py-0.5 xs:py-1 rounded">{m.language === 'hi' ? 'हिंदी' : m.language === 'hinglish' ? 'Hinglish' : 'English'}</span>
                           )}
                         </div>
-                        <div className="flex items-center justify-between mt-2">
+                        <div className="flex items-center justify-between mt-1 xs:mt-2 gap-1">
                           <div className="text-xs text-gray-400">{m.date ? new Date(m.date).toLocaleString() : ''}</div>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1 xs:gap-2">
                             {m.role === 'assistant' && (
                               <>
-                                <button onClick={() => copyToClipboard(m.text)} className="text-xs text-blue-600">Copy</button>
-                                <button onClick={() => saveAsJournal(m)} className="text-xs text-green-600">Save</button>
+                                <button onClick={() => copyToClipboard(m.text)} className="text-xs text-blue-600 hover:underline">Copy</button>
+                                <button onClick={() => saveAsJournal(m)} className="text-xs text-green-600 hover:underline">Save</button>
                               </>
                             )}
                             {m.role === 'system' && <span className="text-xs text-gray-500">{m.text}</span>}
@@ -190,15 +190,15 @@ export default function Chatbot() {
                       </div>
 
                       {m.role === 'user' && (
-                        <div className="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center ml-3">You</div>
+                        <div className="w-8 xs:w-10 h-8 xs:h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center ml-2 xs:ml-3 flex-shrink-0 text-xs xs:text-sm">You</div>
                       )}
                     </div>
                   ))}
 
                   {loading && (
                     <div className="flex items-start">
-                      <div className="w-10 h-10 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center mr-3">🤖</div>
-                      <div className="p-3 rounded-lg bg-orange-50 text-orange-800">
+                      <div className="w-8 xs:w-10 h-8 xs:h-10 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center mr-2 xs:mr-3 flex-shrink-0">🤖</div>
+                      <div className="p-2 xs:p-3 rounded-lg bg-orange-50 text-orange-800">
                         <div className="flex items-center gap-1">
                           <span className="h-2 w-2 rounded-full bg-orange-600 animate-bounce inline-block" />
                           <span className="h-2 w-2 rounded-full bg-orange-600 animate-bounce inline-block delay-75" />
@@ -210,29 +210,35 @@ export default function Chatbot() {
                 </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="mt-4 flex gap-3 items-start">
-                <textarea onKeyDown={handleKeyDown} value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask the assistant anything... (Enter to send, Shift+Enter for newline)" className="flex-1 border p-3 rounded-lg resize-none h-20" />
-                <div className="flex flex-col gap-2">
-                  <button type="submit" disabled={loading || !input.trim()} className="px-4 py-2 bg-orange-600 text-white rounded-lg">{loading ? 'Thinking…' : 'Send'}</button>
-                  <button type="button" onClick={() => { setMessages([]); localStorage.removeItem('udaan_chat_history'); }} className="px-4 py-2 border rounded-lg">Clear</button>
+              <form onSubmit={handleSubmit} className="mt-4 flex flex-col xs:flex-row gap-2 xs:gap-3 items-stretch xs:items-start flex-shrink-0">
+                <textarea 
+                  onKeyDown={handleKeyDown} 
+                  value={input} 
+                  onChange={(e) => setInput(e.target.value)} 
+                  placeholder="Ask anything... (Enter to send)" 
+                  className="flex-1 border border-gray-300 p-2 xs:p-3 rounded-lg resize-none min-h-[44px] xs:h-20 text-sm xs:text-base focus:outline-none focus:ring-2 focus:ring-orange-500" 
+                />
+                <div className="flex gap-2 flex-shrink-0 w-full xs:w-auto">
+                  <button type="submit" disabled={loading || !input.trim()} className="flex-1 xs:flex-none px-3 xs:px-4 py-2 xs:py-2.5 bg-orange-600 hover:bg-orange-700 disabled:opacity-60 text-white text-sm xs:text-base rounded-lg font-medium transition-all min-h-[44px]">{loading ? 'Thinking…' : 'Send'}</button>
+                  <button type="button" onClick={() => { setMessages([]); localStorage.removeItem('udaan_chat_history'); }} className="flex-1 xs:flex-none px-3 xs:px-4 py-2 xs:py-2.5 border border-gray-300 text-sm xs:text-base rounded-lg hover:bg-gray-50 transition-all min-h-[44px]">Clear</button>
                 </div>
               </form>
             </div>
 
-            <aside className="w-72">
-              <div className="p-4 bg-white rounded-lg border border-orange-100 shadow-sm">
-                <h4 className="font-semibold mb-2">Quick actions</h4>
-                <p className="text-sm text-gray-600 mb-3">Use assistant replies to create journal entries or copy helpful tips.</p>
+            <aside className="hidden lg:block lg:w-64 xl:w-72 flex-shrink-0">
+              <div className="p-3 xs:p-4 bg-white rounded-lg border border-orange-100 shadow-sm sticky top-0">
+                <h4 className="font-semibold mb-2 text-sm xs:text-base">Quick actions</h4>
+                <p className="text-xs xs:text-sm text-gray-600 mb-3">Use assistant replies to create journal entries or copy helpful tips.</p>
                 <button onClick={() => {
                   const last = [...messages].reverse().find(m => m.role === 'assistant');
                   if (last) saveAsJournal(last);
                   else appendMessage({ id: Date.now() + '-sys', role: 'system', text: 'No assistant replies to save', date: new Date().toISOString() });
-                }} className="w-full mb-2 px-3 py-2 bg-green-600 text-white rounded">Save last reply to Journal</button>
-                <button onClick={() => { const last = [...messages].reverse().find(m => m.role === 'assistant'); if (last) copyToClipboard(last.text); }} className="w-full px-3 py-2 border rounded">Copy last reply</button>
+                }} className="w-full mb-2 px-3 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition-all min-h-[44px] flex items-center justify-center">Save last reply to Journal</button>
+                <button onClick={() => { const last = [...messages].reverse().find(m => m.role === 'assistant'); if (last) copyToClipboard(last.text); }} className="w-full px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50 transition-all min-h-[44px] flex items-center justify-center">Copy last reply</button>
               </div>
 
-              <div className="mt-4 text-sm text-gray-500">
-                <div className="font-medium mb-1">Tips</div>
+              <div className="mt-4 text-xs xs:text-sm text-gray-500 p-3 bg-white rounded-lg border border-gray-100">
+                <div className="font-medium mb-2">Tips</div>
                 <ul className="list-disc list-inside space-y-1">
                   <li>Try suggested prompts to get started.</li>
                   <li>Save insights to your Journal for reflection.</li>

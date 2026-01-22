@@ -84,20 +84,20 @@ export default function Career() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-orange-50 py-10 px-4 mt-10">
+    <div className="min-h-screen bg-gradient-to-br from-white to-orange-50 py-4 xs:py-6 sm:py-10 px-3 xs:px-4 sm:px-6 md:px-10 mt-16 xs:mt-14 sm:mt-16 md:mt-0 pb-safe-bottom">
       <div className="mx-auto max-w-4xl">
-        <header className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-orange-600 mb-4">AI Career Navigator</h1>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto">Get personalized career guidance powered by AI. Discover paths aligned with your skills and interests.</p>
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-orange-100 hover:border-orange-300 transition">
-              <div className="text-2xl mb-2">🎯</div>
-              <h3 className="font-medium text-gray-900">Career Discovery</h3>
-              <p className="text-sm text-gray-600">Find your ideal career path based on your interests</p>
+        <header className="mb-6 xs:mb-8 text-center">
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-orange-600 mb-2 xs:mb-4">AI Career Navigator</h1>
+          <p className="text-base xs:text-lg sm:text-base md:text-lg text-gray-700 max-w-2xl mx-auto px-2">Get personalized career guidance powered by AI. Discover paths aligned with your skills and interests.</p>
+          <div className="mt-4 xs:mt-6 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 xs:gap-4 max-w-3xl mx-auto">
+            <div className="bg-white rounded-xl p-3 xs:p-4 shadow-sm border border-orange-100 hover:border-orange-300 transition text-center">
+              <div className="text-xl xs:text-2xl mb-1 xs:mb-2">🎯</div>
+              <h3 className="font-medium text-gray-900 text-sm xs:text-base">Career Discovery</h3>
+              <p className="text-xs text-gray-600 mt-1">Find your ideal career path based on your interests</p>
             </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-orange-100 hover:border-orange-300 transition">
-              <div className="text-2xl mb-2">💡</div>
-              <h3 className="font-medium text-gray-900">Skills Analysis</h3>
+            <div className="bg-white rounded-xl p-3 xs:p-4 shadow-sm border border-orange-100 hover:border-orange-300 transition text-center">
+              <div className="text-xl xs:text-2xl mb-1 xs:mb-2">💡</div>
+              <h3 className="font-medium text-gray-900 text-sm xs:text-base">Skills Analysis</h3>
               <p className="text-sm text-gray-600">Get insights on your skills and growth areas</p>
             </div>
             <div className="bg-white rounded-xl p-4 shadow-sm border border-orange-100 hover:border-orange-300 transition">

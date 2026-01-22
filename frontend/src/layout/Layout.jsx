@@ -8,9 +8,9 @@ import Loading from "../components/shared/Loading";
 export default function Layout() {
   return (
     <ErrorBoundary>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col pt-safe-top">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow w-full">
           <Suspense fallback={<Loading fullScreen />}>
             <Outlet />
           </Suspense>
