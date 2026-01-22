@@ -16,11 +16,11 @@ app.use(helmet());
 // support vite running on alternative ports (5173, 5174, etc.). In production
 // respect FRONTEND_URL.
 app.use(cors({
-  origin: [
-    "https://d2i4w0tbngbtdf.cloudfront.net"
-  ],
-  credentials: true
+  origin: "https://d2i4w0tbngbtdf.cloudfront.net",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
