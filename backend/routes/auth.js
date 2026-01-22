@@ -21,7 +21,7 @@ router.post('/register', registerRules, validate, async (req, res) => {
     const hash = await bcrypt.hash(password, salt);
     const user = await User.create({ name, email, passwordHash: hash });
     const token = generateToken(user);
-    return res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+    return res.json({ success: true, token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Server error' });

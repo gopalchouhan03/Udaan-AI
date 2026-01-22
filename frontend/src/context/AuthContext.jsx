@@ -37,11 +37,15 @@ export const AuthProvider = ({ children }) => {
 
       const response = await authService.login(credentials);
 
-      if (!response.data || !response.data.token || !response.data.user) {
+      if (!response || !response.data) {
         throw new Error('Invalid response from server');
       }
 
       const { token, user } = response.data;
+      
+      if (!token || !user) {
+        throw new Error('Invalid response from server: missing token or user');
+      }
 
       localStorage.setItem(AUTH_TOKEN_KEY, token);
       localStorage.setItem(USER_DATA_KEY, JSON.stringify(user));

@@ -53,11 +53,11 @@ router.get('/stats', auth, async (req, res) => {
   try {
     const days = Math.max(1, Math.min(365, Number(req.query.days) || 30));
     const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
-    const docs = await Mood.find({ user: req.user._id, date: { $gte: since } });
-    if (!Array.isArray(docs) || docs.length === 0) return res.json({ count: 0, average: 0 });
+    const docs = await Mood.find({ user: req.user._id, date: { $gte: since } }).sort({ date: -1 });
+    if (!Array.isArray(docs) || docs.length === 0) return res.json({ count: 0, average: 0, moods: [] });
     const sum = docs.reduce((s, d) => s + (Number(d.value) || 0), 0);
     const avg = sum / docs.length;
-    return res.json({ count: docs.length, average: avg, days });
+    return res.json({ count: docs.length, average: avg, moods: docs, days });
   } catch (err) {
     console.error('Could not fetch mood stats', err);
     return res.status(500).json({ error: 'Could not fetch mood stats' });

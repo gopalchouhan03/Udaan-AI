@@ -49,7 +49,9 @@ async function analyzeMoodTriggers(userId, startDate, endDate) {
   }
 
   // Check sleep impact
-  const avgSleep = entries.reduce((acc, entry) => acc + (entry.sleepHours || 0), 0) / entries.length;
+  const avgSleep = entries.length > 0 
+    ? entries.reduce((acc, entry) => acc + (entry.sleepHours || 0), 0) / entries.length
+    : 8; // default to good sleep if no entries
   if (avgSleep < 7) {
     triggers.push('Sleep');
   }
