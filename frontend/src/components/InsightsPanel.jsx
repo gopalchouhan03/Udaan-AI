@@ -239,8 +239,8 @@ const InsightsPanel = () => {
         <div className="bg-white p-4 rounded-lg shadow-sm border border-orange-100 transition-all hover:shadow-md">
           <div className="text-sm text-gray-600">Top Triggers</div>
           <div className="text-sm mt-2">
-            {displayedInsights.topTriggers.length > 0 ? (
-              displayedInsights.topTriggers.map((trigger) => (
+            {(displayedInsights.topTriggers || []).length > 0 ? (
+              (displayedInsights.topTriggers || []).map((trigger) => (
                 <span key={trigger} className="inline-block px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs mr-2 mb-1">
                   {trigger}
                 </span>
@@ -279,7 +279,7 @@ const InsightsPanel = () => {
       </div>
 
       {/* Charts Grid */}
-      {displayedInsights.chartData.length > 0 ? (
+      {(displayedInsights.chartData || []).length > 0 ? (
         <>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Mood Trend Chart */}
