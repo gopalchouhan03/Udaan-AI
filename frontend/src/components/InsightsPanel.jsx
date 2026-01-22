@@ -123,10 +123,10 @@ const InsightsPanel = () => {
   if (displayedInsights.averageMood < 3) suggestions.push('Consider journaling about your feelings or trying a short grounding exercise.');
 
   const moodChartData = React.useMemo(() => ({
-    labels: displayedInsights.chartData.map(d => new Date(d.date).toLocaleDateString()),
+    labels: (displayedInsights.chartData || []).map(d => new Date(d.date).toLocaleDateString()),
     datasets: [{
       label: 'Mood',
-      data: displayedInsights.chartData.map(d => d.mood),
+      data: (displayedInsights.chartData || []).map(d => d.mood),
       borderColor: 'rgb(251, 146, 60)',
       backgroundColor: 'rgba(251, 146, 60, 0.1)',
       tension: 0.4,
@@ -306,7 +306,7 @@ const InsightsPanel = () => {
                         ...moodChartData.datasets,
                         {
                           label: 'Task Completion (scaled)',
-                          data: displayedInsights.chartData.map(() => Number(displayedInsights.completionRate) * 5),
+                          data: (displayedInsights.chartData || []).map(() => Number(displayedInsights.completionRate) * 5),
                           borderColor: 'rgba(59, 130, 246, 0.9)',
                           borderDash: [6, 4],
                           backgroundColor: 'rgba(59, 130, 246, 0.05)',
