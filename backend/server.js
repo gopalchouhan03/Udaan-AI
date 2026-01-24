@@ -13,6 +13,14 @@ app.set('trust proxy', 1);
 // Add basic security with helmet
 app.use(helmet());
 
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+    crossOriginOpenerPolicy: false,
+    contentSecurityPolicy: false
+  })
+);
+
 app.use(cors({
   origin: "https://d1ud2qozzk5hfq.cloudfront.net",
   credentials: true,
@@ -25,16 +33,6 @@ app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Security headers
-app.use((req, res, next) => {
-  res.set({
-    'X-Content-Type-Options': 'nosniff',
-    'X-Frame-Options': 'DENY',
-    'X-XSS-Protection': '1; mode=block',
-    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
-  });
-  next();
-});
 
 // Connect to MongoDB and only start the server after a successful connection.
 const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/udaan';
