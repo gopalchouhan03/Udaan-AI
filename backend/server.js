@@ -7,17 +7,20 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 
 const app = express();
+app.set('trust proxy', 1);
+
 
 // Add basic security with helmet
 app.use(helmet());
 
 app.use(cors({
-  origin:"https://d1ud2qozzk5hfq.cloudfront.net",
+  origin: "https://d1ud2qozzk5hfq.cloudfront.net",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
+app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
