@@ -13,9 +13,9 @@ app.use(helmet());
 
 app.use(cors({
   origin:"https://d1ud2qozzk5hfq.cloudfront.net",
+  credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.options("*", cors());
