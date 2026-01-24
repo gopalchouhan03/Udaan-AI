@@ -11,16 +11,13 @@ const app = express();
 // Add basic security with helmet
 app.use(helmet());
 
-// Security middleware
-// Allow requests from the frontend. In development allow any localhost origin to
-// support vite running on alternative ports (5173, 5174, etc.). In production
-// respect FRONTEND_URL.
 app.use(cors({
   origin:"https://d1ud2qozzk5hfq.cloudfront.net",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
+app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
