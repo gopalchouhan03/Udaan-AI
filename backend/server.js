@@ -22,10 +22,11 @@ app.use(
 );
 
 app.use(cors({
-  origin: "https://d1ud2qozzk5hfq.cloudfront.net",
+  origin: process.env.FRONTEND_URL || "https://d1ud2qozzk5hfq.cloudfront.net",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 200
 }));
 
 app.options("*", cors());
