@@ -22,7 +22,21 @@ app.use(
 );
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "https://d1ud2qozzk5hfq.cloudfront.net",
+  origin: function(origin, callback) {
+    const allowedOrigins = [
+      process.env.FRONTEND_URL,
+      "https://d1ud2qozzk5hfq.cloudfront.net",
+      "https://d2i4w0tbngbtdf.cloudfront.net",
+      "http://localhost:5173",
+      "http://localhost:3000"
+    ].filter(Boolean);
+    
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed'));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
