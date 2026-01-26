@@ -36,7 +36,7 @@ api.interceptors.response.use(
 export const authService = {
   login: async (credentials) => {
     try {
-      const response = await api.post('/api/auth/login', credentials);
+      const response = await api.post('/auth/login', credentials);
       return response;
     } catch (error) {
       console.error('Login API Error:', error.response?.data || error.message);
@@ -45,7 +45,7 @@ export const authService = {
   },
   register: async (userData) => {
     try {
-      const response = await api.post('/api/auth/register', userData);
+      const response = await api.post('/auth/register', userData);
       return response;
     } catch (error) {
       console.error('Register API Error:', error.response?.data || error.message);
