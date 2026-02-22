@@ -36,7 +36,7 @@ api.interceptors.response.use(
 export const authService = {
   login: async (credentials) => {
     try {
-      const response = await api.post('/auth/login', credentials);
+      const response = await api.post('/api/auth/login', credentials);
       return response;
     } catch (error) {
       console.error('Login API Error:', error.response?.data || error.message);
@@ -45,7 +45,7 @@ export const authService = {
   },
   register: async (userData) => {
     try {
-      const response = await api.post('/auth/register', userData);
+      const response = await api.post('/api/auth/register', userData);
       return response;
     } catch (error) {
       console.error('Register API Error:', error.response?.data || error.message);
@@ -59,28 +59,28 @@ export const authService = {
 };
 
 export const userService = {
-  getProfile: () => api.get('/user/profile'),
-  updateProfile: (data) => api.put('/user/profile', data),
+  getProfile: () => api.get('/api/user/profile'),
+  updateProfile: (data) => api.put('/api/user/profile', data),
 };
 
 export const moodService = {
-  trackMood: (data) => api.post('/mood', data),
-  getMoodHistory: () => api.get('/mood/history'),
-  getMoodInsights: () => api.get('/mood/insights'),
+  trackMood: (data) => api.post('/api/mood', data),
+  getMoodHistory: () => api.get('/api/mood/history'),
+  getMoodInsights: () => api.get('/api/mood/insights'),
 };
 
 export const journalService = {
-  createEntry: (data) => api.post('/journal', data),
-  getEntries: () => api.get('/journal'),
-  updateEntry: (id, data) => api.put(`/journal/${id}`, data),
-  deleteEntry: (id) => api.delete(`/journal/${id}`),
+  createEntry: (data) => api.post('/api/journal', data),
+  getEntries: () => api.get('/api/journal'),
+  updateEntry: (id, data) => api.put(`/api/journal/${id}`, data),
+  deleteEntry: (id) => api.delete(`/api/journal/${id}`),
 };
 
 export const taskService = {
-  createTask: (data) => api.post('/tasks', data),
-  getTasks: () => api.get('/tasks'),
-  updateTask: (id, data) => api.put(`/tasks/${id}`, data),
-  deleteTask: (id) => api.delete(`/tasks/${id}`),
+  createTask: (data) => api.post('/api/tasks', data),
+  getTasks: () => api.get('/api/tasks'),
+  updateTask: (id, data) => api.put(`/api/tasks/${id}`, data),
+  deleteTask: (id) => api.delete(`/api/tasks/${id}`),
 };
 
 export default api;
