@@ -26,7 +26,6 @@ app.use(cors({
     const allowedOrigins = [
       process.env.FRONTEND_URL,
       "https://d1ud2qozzk5hfq.cloudfront.net",
-      "https://d2i4w0tbngbtdf.cloudfront.net",
       "http://localhost:5173",
       "http://localhost:3000"
     ].filter(Boolean);
